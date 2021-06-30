@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.0 (Python 3.9.5 on win32)" generated="20210630 13:25:44.421" rpa="false" schemaversion="2">
+<suite id="s1" name="Tests" source="C:\Users\rafael.tulio\Documents\Projetos\desafio_qa\tests">
+<suite id="s1-s1" name="pessoasAPITests" source="C:\Users\rafael.tulio\Documents\Projetos\desafio_qa\tests\pessoasAPITests.robot">
+<kw name="Autenticar API" library="resourcesPage" type="SETUP">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${HEADERS}</var>
+<arg>Connection=keep-alive</arg>
+<arg>Accept-Encoding=gzip, deflate, br</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210630 13:25:44.581" level="INFO">${HEADERS} = {'Connection': 'keep-alive', 'Accept-Encoding': 'gzip, deflate, br'}</msg>
+<status status="PASS" starttime="20210630 13:25:44.575" endtime="20210630 13:25:44.581"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>urlAPI</arg>
+<arg>${base_url}</arg>
+<arg>headers=${HEADERS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20210630 13:25:44.581" level="INFO">Creating Session using : alias=urlAPI, url=http://localhost:8081, headers={'Connection': 'keep-alive', 'Accept-Encoding': 'gzip, deflate, br'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210630 13:25:44.581" endtime="20210630 13:25:44.581"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.575" endtime="20210630 13:25:44.582"/>
+</kw>
+<test id="s1-s1-t1" name="Cenário 01: GET Lista todas as pessoas">
+<kw name="Listar todas as pessoas cadastradas">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{PARAMS}</var>
+<arg>pagina=0</arg>
+<arg>tamanho=10</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210630 13:25:44.582" level="INFO">&amp;{PARAMS} = { pagina=0 | tamanho=10 }</msg>
+<status status="PASS" starttime="20210630 13:25:44.582" endtime="20210630 13:25:44.582"/>
+</kw>
+<kw name="Get On Session" library="RequestsLibrary">
+<var>${RESPOSTA}</var>
+<arg>urlAPI</arg>
+<arg>${uri_pessoas}</arg>
+<arg>params=${PARAMS}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210630 13:25:44.592" level="INFO">GET Request : url=http://localhost:8081/api/pessoas/?pagina=0&amp;tamanho=10 
+ path_url=/api/pessoas/?pagina=0&amp;tamanho=10 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210630 13:25:44.592" level="INFO">GET Response : url=http://localhost:8081/api/pessoas/?pagina=0&amp;tamanho=10 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '380', 'ETag': 'W/"17c-1MRfOCVE5Kw65mMvl4isM8BFau8"', 'Date': 'Wed, 30 Jun 2021 16:25:44 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"pagina":0,"tamanho":10,"numeroRegistros":3,"registros":[{"id":1,"nome":"João da Silva","dataNascimento":"2000-01-01","cpf":"123.456.789/00","ativo":true,"meta":1000},{"id":2,"nome":"Maria da Silva","dataNascimento":"1998-01-01","cpf":"987.654.321/00","ativo":true,"meta":1000},{"id":3,"nome":"José da Silva","dataNascimento":"2010-09-27","cpf":null,"ativo":false,"meta":0.5}]} 
+ </msg>
+<msg timestamp="20210630 13:25:44.592" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.582" endtime="20210630 13:25:44.592"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Lista de Produtos: ${RESPOSTA.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.593" level="INFO">Lista de Produtos: {"pagina":0,"tamanho":10,"numeroRegistros":3,"registros":[{"id":1,"nome":"João da Silva","dataNascimento":"2000-01-01","cpf":"123.456.789/00","ativo":true,"meta":1000},{"id":2,"nome":"Maria da Silva","dataNascimento":"1998-01-01","cpf":"987.654.321/00","ativo":true,"meta":1000},{"id":3,"nome":"José da Silva","dataNascimento":"2010-09-27","cpf":null,"ativo":false,"meta":0.5}]}</msg>
+<status status="PASS" starttime="20210630 13:25:44.592" endtime="20210630 13:25:44.593"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${RESPOSTA}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20210630 13:25:44.593" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.593" endtime="20210630 13:25:44.593"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.582" endtime="20210630 13:25:44.593"/>
+</kw>
+<kw name="Conferir o status code">
+<arg>200</arg>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<arg>${STATUS_CODE_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20210630 13:25:44.594" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.594" endtime="20210630 13:25:44.594"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.595" level="INFO">200</msg>
+<status status="PASS" starttime="20210630 13:25:44.594" endtime="20210630 13:25:44.595"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.594" endtime="20210630 13:25:44.595"/>
+</kw>
+<kw name="Conferir o reason">
+<arg>OK</arg>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<arg>${REASON_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20210630 13:25:44.595" endtime="20210630 13:25:44.596"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.596" level="INFO">OK</msg>
+<status status="PASS" starttime="20210630 13:25:44.596" endtime="20210630 13:25:44.596"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.595" endtime="20210630 13:25:44.596"/>
+</kw>
+<tag>apiTests</tag>
+<status status="PASS" starttime="20210630 13:25:44.582" endtime="20210630 13:25:44.596"/>
+</test>
+<test id="s1-s1-t2" name="Cenário 02: GET Lista pessoa informando numero do ID">
+<kw name="Informar o ID numero &quot;1&quot;" sourcename="Informar o ID numero &quot;${ID}&quot;">
+<kw name="Get On Session" library="RequestsLibrary">
+<var>${RESPOSTA}</var>
+<arg>urlAPI</arg>
+<arg>${uri_pessoas}${ID}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210630 13:25:44.599" level="INFO">GET Request : url=http://localhost:8081/api/pessoas/1 
+ path_url=/api/pessoas/1 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210630 13:25:44.599" level="INFO">GET Response : url=http://localhost:8081/api/pessoas/1 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '112', 'ETag': 'W/"70-A5FJjJgI51adJMqLTz8Dxq7fqHY"', 'Date': 'Wed, 30 Jun 2021 16:25:44 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body=[{"id":1,"nome":"João da Silva","dataNascimento":"2000-01-01","cpf":"123.456.789/00","ativo":true,"meta":1000}] 
+ </msg>
+<msg timestamp="20210630 13:25:44.600" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.598" endtime="20210630 13:25:44.600"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Lista de Produtos: ${RESPOSTA.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.600" level="INFO">Lista de Produtos: [{"id":1,"nome":"João da Silva","dataNascimento":"2000-01-01","cpf":"123.456.789/00","ativo":true,"meta":1000}]</msg>
+<status status="PASS" starttime="20210630 13:25:44.600" endtime="20210630 13:25:44.600"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${RESPOSTA}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20210630 13:25:44.601" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.600" endtime="20210630 13:25:44.601"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.597" endtime="20210630 13:25:44.601"/>
+</kw>
+<kw name="Conferir o status code">
+<arg>200</arg>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<arg>${STATUS_CODE_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20210630 13:25:44.601" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.601" endtime="20210630 13:25:44.601"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.602" level="INFO">200</msg>
+<status status="PASS" starttime="20210630 13:25:44.602" endtime="20210630 13:25:44.602"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.601" endtime="20210630 13:25:44.602"/>
+</kw>
+<kw name="Conferir o reason">
+<arg>OK</arg>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<arg>${REASON_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20210630 13:25:44.603" endtime="20210630 13:25:44.603"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.604" level="INFO">OK</msg>
+<status status="PASS" starttime="20210630 13:25:44.603" endtime="20210630 13:25:44.604"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.602" endtime="20210630 13:25:44.604"/>
+</kw>
+<tag>apiTests</tag>
+<status status="PASS" starttime="20210630 13:25:44.597" endtime="20210630 13:25:44.604"/>
+</test>
+<test id="s1-s1-t3" name="Cenário 03: POST Cadastrar pessoas">
+<kw name="Dado que informo os dados da requisicao">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{data}</var>
+<arg>id=1</arg>
+<arg>nome=João da Silva</arg>
+<arg>dataNascimento=2000-01-01</arg>
+<arg>cpf=464.589.520-66</arg>
+<arg>ativo=true</arg>
+<arg>meta=1000.00</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210630 13:25:44.607" level="INFO">&amp;{data} = { id=1 | nome=João da Silva | dataNascimento=2000-01-01 | cpf=464.589.520-66 | ativo=true | meta=1000.00 }</msg>
+<status status="PASS" starttime="20210630 13:25:44.606" endtime="20210630 13:25:44.607"/>
+</kw>
+<kw name="Post On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>urlAPI</arg>
+<arg>${uri_pessoas}</arg>
+<arg>json=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20210630 13:25:44.609" level="INFO">POST Request : url=http://localhost:8081/api/pessoas/ 
+ path_url=/api/pessoas/ 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '134', 'Content-Type': 'application/json'} 
+ body=b'{"id": "1", "nome": "Jo\\u00e3o da Silva", "dataNascimento": "2000-01-01", "cpf": "464.589.520-66", "ativo": "true", "meta": "1000.00"}' 
+ </msg>
+<msg timestamp="20210630 13:25:44.609" level="INFO">POST Response : url=http://localhost:8081/api/pessoas/ 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '107', 'ETag': 'W/"6b-VyUsm2EiyQWnC8CYpabOGpeTmFU"', 'Date': 'Wed, 30 Jun 2021 16:25:44 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"id":4,"nome":"João da Silva","data":"2000-01-01","CPF":"464.589.520-66","ativo":"true","meta":"1000.00"} 
+ </msg>
+<msg timestamp="20210630 13:25:44.609" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.607" endtime="20210630 13:25:44.609"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.606" endtime="20210630 13:25:44.610"/>
+</kw>
+<kw name="Conferir o status code">
+<arg>200</arg>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<arg>${STATUS_CODE_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20210630 13:25:44.611" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.610" endtime="20210630 13:25:44.611"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.611" level="INFO">200</msg>
+<status status="PASS" starttime="20210630 13:25:44.611" endtime="20210630 13:25:44.611"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.610" endtime="20210630 13:25:44.611"/>
+</kw>
+<kw name="Conferir o reason">
+<arg>OK</arg>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<arg>${REASON_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20210630 13:25:44.612" endtime="20210630 13:25:44.612"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.613" level="INFO">OK</msg>
+<status status="PASS" starttime="20210630 13:25:44.612" endtime="20210630 13:25:44.613"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.611" endtime="20210630 13:25:44.613"/>
+</kw>
+<tag>apiTests</tag>
+<status status="PASS" starttime="20210630 13:25:44.605" endtime="20210630 13:25:44.613"/>
+</test>
+<doc>Documentação de API: Suite de Testes para validar a API</doc>
+<status status="PASS" starttime="20210630 13:25:44.452" endtime="20210630 13:25:44.614"/>
+</suite>
+<suite id="s1-s2" name="receitasAPITests" source="C:\Users\rafael.tulio\Documents\Projetos\desafio_qa\tests\receitasAPITests.robot">
+<kw name="Autenticar API" library="resourcesPage" type="SETUP">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${HEADERS}</var>
+<arg>Connection=keep-alive</arg>
+<arg>Accept-Encoding=gzip, deflate, br</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210630 13:25:44.620" level="INFO">${HEADERS} = {'Connection': 'keep-alive', 'Accept-Encoding': 'gzip, deflate, br'}</msg>
+<status status="PASS" starttime="20210630 13:25:44.620" endtime="20210630 13:25:44.620"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>urlAPI</arg>
+<arg>${base_url}</arg>
+<arg>headers=${HEADERS}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20210630 13:25:44.621" level="INFO">Creating Session using : alias=urlAPI, url=http://localhost:8081, headers={'Connection': 'keep-alive', 'Accept-Encoding': 'gzip, deflate, br'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210630 13:25:44.620" endtime="20210630 13:25:44.621"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.620" endtime="20210630 13:25:44.621"/>
+</kw>
+<test id="s1-s2-t1" name="Cenário 01: GET Lista todas as receitas">
+<kw name="Listar todas as receitas cadastradas">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{PARAMS}</var>
+<arg>pagina=0</arg>
+<arg>tamanho=10</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210630 13:25:44.623" level="INFO">&amp;{PARAMS} = { pagina=0 | tamanho=10 }</msg>
+<status status="PASS" starttime="20210630 13:25:44.623" endtime="20210630 13:25:44.623"/>
+</kw>
+<kw name="Get On Session" library="RequestsLibrary">
+<var>${RESPOSTA}</var>
+<arg>urlAPI</arg>
+<arg>${uri_receitas}</arg>
+<arg>params=${PARAMS}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210630 13:25:44.626" level="INFO">GET Request : url=http://localhost:8081/api/receitas/?pagina=0&amp;tamanho=10 
+ path_url=/api/receitas/?pagina=0&amp;tamanho=10 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210630 13:25:44.626" level="INFO">GET Response : url=http://localhost:8081/api/receitas/?pagina=0&amp;tamanho=10 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '176', 'ETag': 'W/"b0-68cXUfAR4aczSjkTAkdJGNZfpyE"', 'Date': 'Wed, 30 Jun 2021 16:25:44 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"pagina":0,"tamanho":10,"numeroRegistros":2,"registros":[{"id":1,"pessoaId":1,"data":"2021-01-12","valor":"1100.99"},{"id":2,"pessoaId":1,"data":"2021-01-15","valor":"2500"}]} 
+ </msg>
+<msg timestamp="20210630 13:25:44.627" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.623" endtime="20210630 13:25:44.627"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Lista de Produtos: ${RESPOSTA.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.627" level="INFO">Lista de Produtos: {"pagina":0,"tamanho":10,"numeroRegistros":2,"registros":[{"id":1,"pessoaId":1,"data":"2021-01-12","valor":"1100.99"},{"id":2,"pessoaId":1,"data":"2021-01-15","valor":"2500"}]}</msg>
+<status status="PASS" starttime="20210630 13:25:44.627" endtime="20210630 13:25:44.627"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${RESPOSTA}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20210630 13:25:44.628" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.627" endtime="20210630 13:25:44.628"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.622" endtime="20210630 13:25:44.628"/>
+</kw>
+<kw name="Conferir o status code">
+<arg>200</arg>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<arg>${STATUS_CODE_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20210630 13:25:44.629" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.628" endtime="20210630 13:25:44.629"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.629" level="INFO">200</msg>
+<status status="PASS" starttime="20210630 13:25:44.629" endtime="20210630 13:25:44.629"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.628" endtime="20210630 13:25:44.629"/>
+</kw>
+<kw name="Conferir o reason">
+<arg>OK</arg>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<arg>${REASON_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20210630 13:25:44.630" endtime="20210630 13:25:44.630"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.631" level="INFO">OK</msg>
+<status status="PASS" starttime="20210630 13:25:44.630" endtime="20210630 13:25:44.631"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.629" endtime="20210630 13:25:44.631"/>
+</kw>
+<tag>apiTests</tag>
+<status status="PASS" starttime="20210630 13:25:44.621" endtime="20210630 13:25:44.631"/>
+</test>
+<test id="s1-s2-t2" name="Cenário 02: GET Lista receita informando numero do ID">
+<kw name="Informar o ID da receita numero &quot;1&quot;" sourcename="Informar o ID da receita numero &quot;${ID_RECEITA}&quot;">
+<kw name="Get On Session" library="RequestsLibrary">
+<var>${RESPOSTA}</var>
+<arg>urlAPI</arg>
+<arg>${uri_receitas}${ID_RECEITA}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210630 13:25:44.634" level="INFO">GET Request : url=http://localhost:8081/api/receitas/1 
+ path_url=/api/receitas/1 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210630 13:25:44.634" level="INFO">GET Response : url=http://localhost:8081/api/receitas/1 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '61', 'ETag': 'W/"3d-5Tm2VPgkgH3c5zOO0nX+BYHBs0c"', 'Date': 'Wed, 30 Jun 2021 16:25:44 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body=[{"id":1,"pessoaId":1,"data":"2021-01-12","valor":"1100.99"}] 
+ </msg>
+<msg timestamp="20210630 13:25:44.634" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.632" endtime="20210630 13:25:44.634"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Lista de Produtos: ${RESPOSTA.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.635" level="INFO">Lista de Produtos: [{"id":1,"pessoaId":1,"data":"2021-01-12","valor":"1100.99"}]</msg>
+<status status="PASS" starttime="20210630 13:25:44.634" endtime="20210630 13:25:44.635"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${RESPOSTA}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20210630 13:25:44.635" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.635" endtime="20210630 13:25:44.635"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.632" endtime="20210630 13:25:44.635"/>
+</kw>
+<kw name="Conferir o status code">
+<arg>200</arg>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<arg>${STATUS_CODE_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20210630 13:25:44.636" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.636" endtime="20210630 13:25:44.636"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.637" level="INFO">200</msg>
+<status status="PASS" starttime="20210630 13:25:44.636" endtime="20210630 13:25:44.638"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.636" endtime="20210630 13:25:44.638"/>
+</kw>
+<kw name="Conferir o reason">
+<arg>OK</arg>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<arg>${REASON_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20210630 13:25:44.639" endtime="20210630 13:25:44.639"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.640" level="INFO">OK</msg>
+<status status="PASS" starttime="20210630 13:25:44.639" endtime="20210630 13:25:44.640"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.638" endtime="20210630 13:25:44.640"/>
+</kw>
+<tag>apiTests</tag>
+<status status="PASS" starttime="20210630 13:25:44.631" endtime="20210630 13:25:44.640"/>
+</test>
+<test id="s1-s2-t3" name="Cenário 03: POST Cadastrar receitas">
+<kw name="Dado que informo os dados da requisicao para cadastrar a receita">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{data}</var>
+<arg>pessoaId=1</arg>
+<arg>data=2021-02-15</arg>
+<arg>valor=2500.00</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210630 13:25:44.642" level="INFO">&amp;{data} = { pessoaId=1 | data=2021-02-15 | valor=2500.00 }</msg>
+<status status="PASS" starttime="20210630 13:25:44.642" endtime="20210630 13:25:44.642"/>
+</kw>
+<kw name="Post On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>urlAPI</arg>
+<arg>${uri_receitas}</arg>
+<arg>json=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20210630 13:25:44.645" level="INFO">POST Request : url=http://localhost:8081/api/receitas/ 
+ path_url=/api/receitas/ 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '59', 'Content-Type': 'application/json'} 
+ body=b'{"pessoaId": "1", "data": "2021-02-15", "valor": "2500.00"}' 
+ </msg>
+<msg timestamp="20210630 13:25:44.645" level="INFO">POST Response : url=http://localhost:8081/api/receitas/ 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '41', 'ETag': 'W/"29-FTROfWa0tBlU2F6uYLOuy6kb1+U"', 'Date': 'Wed, 30 Jun 2021 16:25:44 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"id":1,"data":"2021-02-15","valor":2500} 
+ </msg>
+<msg timestamp="20210630 13:25:44.645" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.642" endtime="20210630 13:25:44.645"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.641" endtime="20210630 13:25:44.645"/>
+</kw>
+<kw name="Conferir o status code">
+<arg>200</arg>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<arg>${STATUS_CODE_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20210630 13:25:44.646" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20210630 13:25:44.645" endtime="20210630 13:25:44.646"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.646" level="INFO">200</msg>
+<status status="PASS" starttime="20210630 13:25:44.646" endtime="20210630 13:25:44.646"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.645" endtime="20210630 13:25:44.647"/>
+</kw>
+<kw name="Conferir o reason">
+<arg>OK</arg>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<arg>${REASON_DESEJADO}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20210630 13:25:44.647" endtime="20210630 13:25:44.647"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.reason}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210630 13:25:44.648" level="INFO">OK</msg>
+<status status="PASS" starttime="20210630 13:25:44.647" endtime="20210630 13:25:44.648"/>
+</kw>
+<status status="PASS" starttime="20210630 13:25:44.647" endtime="20210630 13:25:44.648"/>
+</kw>
+<tag>apiTests</tag>
+<status status="PASS" starttime="20210630 13:25:44.641" endtime="20210630 13:25:44.648"/>
+</test>
+<doc>Documentação de API: Suite de Testes para validar a API</doc>
+<status status="PASS" starttime="20210630 13:25:44.614" endtime="20210630 13:25:44.649"/>
+</suite>
+<status status="PASS" starttime="20210630 13:25:44.421" endtime="20210630 13:25:44.650"/>
+</suite>
+<statistics>
+<total>
+<stat pass="6" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="6" fail="0" skip="0">apiTests</stat>
+</tag>
+<suite>
+<stat pass="6" fail="0" skip="0" id="s1" name="Tests">Tests</stat>
+<stat pass="3" fail="0" skip="0" id="s1-s1" name="pessoasAPITests">Tests.pessoasAPITests</stat>
+<stat pass="3" fail="0" skip="0" id="s1-s2" name="receitasAPITests">Tests.receitasAPITests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -19,4 +19,5 @@ $ Acessar a pasta tests do projeto
 robot -d ./results tests/pessoasAPITests.robot
 robot -d ./results tests/receitasAPITests.robot
 # Execute a classe de testes por tag
-$ robot -d ./results -i apiQA tests
+$ robot -d ./results -i apiTtests tests
+

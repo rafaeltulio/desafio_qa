@@ -22,6 +22,11 @@ let db = [
 ]
 
 // Lista todas as pessoas
+app.get('/', (req, res) => {
+    console.log('API')
+})
+
+// Lista todas as pessoas
 app.get('/api/pessoas', (req, res) => {
     return res.json(dbPessoas);
 })
