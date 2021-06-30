@@ -1,7 +1,7 @@
 # desafio_qa
 Projeto de Automação de Testes - QA Challenge
 ## Descrição do Projeto
-API construída com NodeJS utilizando o framework Express
+API construída com NodeJS utilizando o framework Express<br>
 Endpoint api/pessoas<br>
 Endpoint api/receitas<br>
 Endpoint api/totalizadores<br>
